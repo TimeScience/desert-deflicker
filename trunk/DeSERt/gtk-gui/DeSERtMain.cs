@@ -545,9 +545,9 @@ public partial class DeSERtMain
 		w82.Y = 480;
 		// Container child BG.Gtk.Fixed+FixedChild
 		this.FinishedDoBox = global::Gtk.ComboBox.NewText ();
-		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Do Nothing\r"));
-		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Close DeSERt\r"));
-		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Suspend\r"));
+		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Do Nothing"));
+		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Close DeSERt"));
+		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Suspend"));
 		this.FinishedDoBox.AppendText (global::Mono.Unix.Catalog.GetString ("Shut Down"));
 		this.FinishedDoBox.WidthRequest = 120;
 		this.FinishedDoBox.HeightRequest = 25;

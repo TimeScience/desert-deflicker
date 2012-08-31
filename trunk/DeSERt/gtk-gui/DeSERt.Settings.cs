@@ -58,7 +58,7 @@ namespace DeSERt
 			w2.Y = 10;
 			// Container child SettingsBG.Gtk.Fixed+FixedChild
 			this.ProgramSelBox = global::Gtk.ComboBox.NewText ();
-			this.ProgramSelBox.AppendText (global::Mono.Unix.Catalog.GetString ("Raw Therapee\r"));
+			this.ProgramSelBox.AppendText (global::Mono.Unix.Catalog.GetString ("Raw Therapee"));
 			this.ProgramSelBox.AppendText (global::Mono.Unix.Catalog.GetString ("Lightroom"));
 			this.ProgramSelBox.WidthRequest = 170;
 			this.ProgramSelBox.Name = "ProgramSelBox";
@@ -126,8 +126,8 @@ namespace DeSERt
 			w9.Y = 180;
 			// Container child SettingsBG.Gtk.Fixed+FixedChild
 			this.SavingFormatBox = global::Gtk.ComboBox.NewText ();
-			this.SavingFormatBox.AppendText (global::Mono.Unix.Catalog.GetString ("jpg\r"));
-			this.SavingFormatBox.AppendText (global::Mono.Unix.Catalog.GetString ("png\r"));
+			this.SavingFormatBox.AppendText (global::Mono.Unix.Catalog.GetString ("jpg"));
+			this.SavingFormatBox.AppendText (global::Mono.Unix.Catalog.GetString ("png"));
 			this.SavingFormatBox.AppendText (global::Mono.Unix.Catalog.GetString ("tiff"));
 			this.SavingFormatBox.WidthRequest = 70;
 			this.SavingFormatBox.Name = "SavingFormatBox";
@@ -158,7 +158,7 @@ namespace DeSERt
 			w12.Y = 195;
 			// Container child SettingsBG.Gtk.Fixed+FixedChild
 			this.BitDepthBox = global::Gtk.ComboBox.NewText ();
-			this.BitDepthBox.AppendText (global::Mono.Unix.Catalog.GetString ("8\r"));
+			this.BitDepthBox.AppendText (global::Mono.Unix.Catalog.GetString ("8"));
 			this.BitDepthBox.AppendText (global::Mono.Unix.Catalog.GetString ("16"));
 			this.BitDepthBox.WidthRequest = 50;
 			this.BitDepthBox.Sensitive = false;
