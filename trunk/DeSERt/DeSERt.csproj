@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8AE3E8D7-FAA0-4E99-9004-A7E2DE1F5858}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DeSERt</RootNamespace>
+    <AssemblyName>DeSERt</AssemblyName>
+    <StartupObject>DeSERt.MainClass</StartupObject>
+    <ApplicationIcon>DeSERt-Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeSERt-Icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="DeSERtMain.cs" />
+    <Compile Include="gtk-gui\DeSERtMain.cs" />
+    <Compile Include="Classes\ErrorReport.cs" />
+    <Compile Include="Classes\FileData.cs" />
+    <Compile Include="Classes\Filterset.cs" />
+    <Compile Include="Classes\GraphCurves.cs" />
+    <Compile Include="Classes\LinearBitmap.cs" />
+    <Compile Include="Classes\MessageBox.cs" />
+    <Compile Include="Classes\MySettings.cs" />
+    <Compile Include="Classes\MySpline.cs" />
+    <Compile Include="Classes\MyTimer.cs" />
+    <Compile Include="Classes\PP3Values.cs" />
+    <Compile Include="Classes\ProjectInfo.cs" />
+    <Compile Include="Classes\PulseBar.cs" />
+    <Compile Include="Classes\SaverClass.cs" />
+    <Compile Include="BrightnessPreview.cs" />
+    <Compile Include="CreateFilterset.cs" />
+    <Compile Include="Help.cs" />
+    <Compile Include="MainBGW.cs" />
+    <Compile Include="MainSub.cs" />
+    <Compile Include="MyAbout.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="VarEnum.cs" />
+    <Compile Include="gtk-gui\DeSERt.Settings.cs" />
+    <Compile Include="gtk-gui\DeSERt.Help.cs" />
+    <Compile Include="gtk-gui\DeSERt.MyAbout.cs" />
+    <Compile Include="gtk-gui\DeSERt.CreateFilterset.cs" />
+    <Compile Include="gtk-gui\DeSERt.BrightnessPreview.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="Help\en.xml" />
+    <None Include="BugsIdeasInfo.txt" />
+    <None Include="DeSERt-Icon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

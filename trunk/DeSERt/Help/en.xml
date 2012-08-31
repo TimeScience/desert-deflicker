@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Help id="0">
+  <Intro id="1" title="Overview">
+DeSERt V1.0 alpha
+
+Question?
+Contact me at: bildstein.johannes@gmail.com
+
+DeSERt uses:
+#RawTherapee:     http://rawtherapee.com/
+#Exiftool:        http://www.sno.phy.queensu.ca/~phil/exiftool/
+#SharpZipLib:     http://www.icsharpcode.net/opensource/sharpziplib/
+
+© 2012 Johannes Bildstein</Intro>
+  <Howto id="1" title="How to use DeSERt">
+The workflow of DeSERt with Raw Therapee.
+    <Step id="2" title="Before DeSERt">
+Preparations before you start DeSERt:
+
+Before you start DeSERt you have to edit one (or more for keyframes)
+picture of your set in Raw Therapee.
+When you are finished doing that simply save the PP3 file (Postprocessing profile)
+by clicking on the save button on the right side below the histogram.</Step>
+    <Step id="2" title="First Start">
+First start of DeSERt:
+
+When you first start DeSERt you have to choose the Path to your
+desired editing Software (currently only Raw Therapee).
+Simply do that by clicking on “Settings” in the Menu.
+And while you´re there you can check the other settings too and set them as you wish.</Step>
+    <Step id="2" title="Loading Images">
+Loading the Images:
+
+The First thing you have to do for a new project is, of course,
+loading the images you want to process.
+Click on “Add Images” and choose the directory with your set.
+The program will load every image with known image extension in this directory.
+It may take a while till all thumbs and camera information is loaded.</Step>    
+    <Step id="2" title="Postprocessing Profile">
+Choosing the Postprocessing Profile:
+
+When the images are loaded you can choose the previously saved PP3 file and open it.
+If your set of images needs changes in editing over time, simply make more PP3s which
+you can add with a right click on the desired image in the table and choose "Keyframe->Add".
+If you have added more than one Postprocessing Profile, DeSERt will interpolate all values
+inbetween (you can still change the interpolation manually at the editing tab).</Step>
+    <Step id="2" title="Filtersets">
+Adding and Making Filtersets:
+
+This feature is not completely finished yet but will be soon.
+    </Step>
+    <Step id="2" title="Darkframes">
+Adding Darkframes:
+
+With right clickon the table and "Darkframe->Open" you can select between three options:
+1. Single Image: Adds a Darkframe to the selected image.
+2. Till End: Adds the opened Darkframe to all following images, starting from the selected one
+3. Till Nex Darkframe: Adds the opened Darkframe to all following images until the next opened Darkframe, starting from the selected one
+For removing a Darkframe there are the same options.
+    </Step>
+    <Step id="2" title="Brightness Calculation">
+Starting the Brightness Calculation:
+
+If you have the right set of images loaded you can start the calculation of the brightness.
+You can cancel this operation by clicking on the “Cancel” button.
+After the calculation you have the possibility to adapt the brightness as you wish. There are
+two ways to do that:
+1. Directly change the brightness value in the table.
+2. Use the slider in the editing tab. It changes the whole curve in percent.
+To reset changes from the first option, use right click->Brightness->Reset (All) Brightness.
+To reset changes from the first option, either use the "Reset Curve" Button to completely
+reset the curve or simply type in "100" in the box over the slider to only set back the slider.</Step>
+    <Step id="2" title="Curves">
+Set various Curves:
+
+Once you have calculated the brightness you can also start to edit the curve. If you have selected the
+"Exposure_Compensation" curve you see two curves in the graph. The blue one is the calculated brightness
+and the green one is how the output brightness will be, you can also edit this one.
+If you have opened one or more PP3s there are many more curves to select from. If you have added more than
+one PP3, you can encounter red points in the graph. Those points mark a keyframe and you can´t edit them.
+
+The "End = Start" Button sets the last point to the value of the first point and the "Start = End" Button
+does the same just vice versa.
+The "Reset Curve" button sets the curve back to its initial form.</Step>
+    <Step id="2" title="Brightness Preview">
+Using the Brightness Preview:
+
+Before you start to render your whole sequence you may want to check if the brightness correction is accurate.
+The "Startindex" indicates the image where the check should start and the "Count" value sets how many images
+should be rendered for the preview. When the brightness calculatin is finished, the startindex is automatically
+set to the highest brighntess jump (where you usually can see an error best).
+Click on the "Brightness Preview" button to start rendering the preview and wait till it is finished.
+Now a window pops up and you can use the slider on the bottom to switch between the images and check if a
+correction is necessary.
+Note that you may get different (and probably better) results if you have opened a postprocessing profile.
+This is due to the fact that the WB and the vignetting correction has a great effect on flicker.</Step>
+    <Step id="2" title="Saving">
+Saving the Images:
+
+When you´re done with everything simply click on the “Save” Button and Raw Therapee will start the editing.
+The finished files will be saved to your selected folder.
+If you wish that the computer goes to sleep mode or completely shuts down, select the desired option beside the button.</Step>
+    <Step id="2" title="After DeSERt">
+When the images are edited:
+
+Once all images are finished you can close DeSERt and continue further processing as you wish.</Step>
+  </Howto>
+  <Issues id ="1" title="Known Issues">
+  Known Issues, Bugs and Problems:
+
+  #the little thumbs probably won´t show up after loading images
+  #interpolation of curve (custom) is not completely accurate (if 4 or more pp3s are used)
+  #the graph curves doesn´t show up if you have opened a Postprocessing Profile but the brightness isn´t calculated yet
+  #identifying the colorspace of an image doesn´t work without Exif (standard = sRGB)
+  #using the Brightness Preview doesn´t work without exif (it´s used to get the image size)
+  #the X/Y valueboxes can´t be set and show an high/low error at the infolabel (it gets set back when redrawing the graph somehow)
+  #The bitdepth of the output is always 8bit. It´s not possible yet to set that via commandline (not implemented in Raw Therapee yet)
+  ->Workaround: Keep the generated PP3 and start batch processing with RT manually (there you can set the output to 16 bit)</Issues>
+  <Planned id ="1" title="Planned Features">
+Features that I want to implement sooner or later:
+    
+#implementing Lightroom support (DeSELt -> Deflicker Software with Exiftool and Lightroom)
+#option to correct WB jumps (from changing filters)
+#option to add a filterset to an image -> better handling for correcting WB jumps, filter corrections... (this info is then written to the PP3/XMP)
+#Drawing two slim red lines which shows the compensationability of RT/LR
+#check for installed Rawtherapee/Lightroom and location automatically at the first start
+#When an Error happens, try to save open Project and ask to open it after new startup
+#make it possible to use ctrl+z/y</Planned>
+</Help>
