@@ -97,7 +97,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="Help\en.xml" />
+    <None Include="Help\en.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="BugsIdeasInfo.txt" />
     <None Include="DeSERt-Icon.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

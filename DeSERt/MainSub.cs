@@ -203,6 +203,7 @@ public partial class DeSERtMain
             res = AskForSaving();
             if (res == ResponseType.Cancel) { return true; }
         }
+        else { KillRunningProcess(); }
 
         if (PreviewImg.Pixbuf != null) { PreviewImg.Pixbuf.Dispose(); }
         deletePPFiles(MySettings.KeepPP);
@@ -1282,10 +1283,6 @@ public partial class DeSERtMain
                             CurveGraphCtx.Restore();
                         }
                     }
-
-                    //Fill the Valueboxes with the current value
-                    XValBox.Text = (SelCurve.Points[SelCurve.SelectedPoint].Value.X + 1).ToString();
-                    YValBox.Text = SelCurve.Points[SelCurve.SelectedPoint].Value.Y.ToString();
                 }
             }
         }
@@ -1381,7 +1378,7 @@ public partial class DeSERtMain
         GCurves.GCurve tmp;
         AllCurves.Curves.TryGetValue(CurveSelectBox.ActiveText, out tmp);
 
-        if (tmp.Points.Count > 0 && MovePoint.Value == false && !tmp.Points[tmp.SelectedPoint].Key)
+        if (tmp.Points.Count > 0 && MovePoint.Value == false && !tmp.Points[tmp.SelectedPoint].Key && XValBox.Text.Last() != '.' && XValBox.Text.Last() != ',' && YValBox.Text.Last() != '.' && YValBox.Text.Last() != ',')
         {
             double min = tmp.min;
             double max = tmp.max;
@@ -1390,25 +1387,34 @@ public partial class DeSERtMain
 
             try
             {
-                Xval = (float)Convert.ToDouble(XValBox.Text.Replace('.', ','));
+                Xval = (float)Convert.ToDouble(XValBox.Text.Replace('.', ',')) - 1;
                 Yval = (float)Convert.ToDouble(YValBox.Text.Replace('.', ','));
             }
             catch { UpdateInfo(InfoType.InvalidNumber, 0); return; }
 
+            //to check the boundaries (min/max values in X and Y)
             if (Xval < 0 || Xval > AllFiles.Count - 1 || Yval < min || Yval > max) { UpdateInfo(InfoType.HighLowValue, 0); return; }
             else { UpdateInfo(InfoType.Default, 0); }
 
-            if (MovePoint.Key != 1 && Xval == 1) { UpdateInfo(InfoType.HighLowValue, 0); return; }
+            //if the selected point is not the first -> X is not allowed to be zero
+            if (MovePoint.Key != 0 && Xval == 0) { UpdateInfo(InfoType.HighLowValue, 0); return; }
             else { UpdateInfo(InfoType.Default, 0); }
 
-            if (MovePoint.Key != tmp.Points.Count - 1 && Xval == tmp.Points.Count - 1) { UpdateInfo(InfoType.HighLowValue, 0); return; }
+            //if the selected point is not the last -> X is not allowed to be the filecount (-1 because it starts with zero)
+            if (MovePoint.Key != tmp.Points.Count - 1 && Xval == AllFiles.Count - 1) { UpdateInfo(InfoType.HighLowValue, 0); return; }
             else { UpdateInfo(InfoType.Default, 0); }
 
+            //otherwise set the point to its new value (if first or last point, only set Y value)
             if (MovePoint.Key > 0 && MovePoint.Key < tmp.Points.Count - 1) { tmp.Points[tmp.SelectedPoint] = new KeyValuePair<bool,PointF>(tmp.Points[tmp.SelectedPoint].Key, new PointF(Xval, Yval)); }
             else { tmp.Points[tmp.SelectedPoint] = new KeyValuePair<bool,PointF>(tmp.Points[tmp.SelectedPoint].Key, new PointF(tmp.Points[tmp.SelectedPoint].Value.X, Yval)); }
+            
+            //Fill the Valueboxes with the current value
+            XValBox.Text = (tmp.Points[tmp.SelectedPoint].Value.X + 1).ToString();
+            YValBox.Text = tmp.Points[tmp.SelectedPoint].Value.Y.ToString();
 
             RefreshGraph(false);
         }
+        else { UpdateInfo(InfoType.Default, 0); }
     }
 
     private void ClearGraph(Context ctx)
