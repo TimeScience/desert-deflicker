@@ -102,6 +102,10 @@ public partial class DeSERtMain : Gtk.Window
             }
 
             MovePoint = new KeyValuePair<int, bool>(MovePoint.Key, false);
+            
+            //Fill the Valueboxes with the current value
+            XValBox.Text = (tmp.Points[tmp.SelectedPoint].Value.X + 1).ToString();
+            YValBox.Text = tmp.Points[tmp.SelectedPoint].Value.Y.ToString();
         }
         catch (Exception ex) { ReportError("Graph Mouse Up", ex); }
     }
@@ -123,6 +127,7 @@ public partial class DeSERtMain : Gtk.Window
                 {
                     tmpGPoints.Add(GetGraphXY(tmp.Points[i].Value));
                 }
+
                 if (MovePoint.Key > 0 && MovePoint.Key < tmp.Points.Count - 1)
                 {
                     if (tmpGPoints[MovePoint.Key - 1].X + 3 < x && tmpGPoints[MovePoint.Key + 1].X - 3 > x)
@@ -140,6 +145,10 @@ public partial class DeSERtMain : Gtk.Window
                         RefreshGraph(false);
                     }
                 }
+                
+                //Fill the Valueboxes with the current value
+                XValBox.Text = (tmp.Points[tmp.SelectedPoint].Value.X + 1).ToString();
+                YValBox.Text = tmp.Points[tmp.SelectedPoint].Value.Y.ToString();
             }
         }
         catch (Exception ex) { ReportError("Graph Mouse Move", ex); }
@@ -846,7 +855,6 @@ public partial class DeSERtMain : Gtk.Window
     {
         DeSERt.Settings sWindow = new DeSERt.Settings();
         sWindow.ShowNow();
-        checkPrograms();
     }
 
     protected void OnHelpActionActivated(object sender, EventArgs e)
