@@ -62,6 +62,9 @@ public partial class DeSERtMain : Gtk.Window
                         //hit point:
                         MovePoint = new KeyValuePair<int, bool>(i, true);
                         tmp.SelectedPoint = i;
+                        //Fill the Valueboxes with the current value
+                        XValBox.Text = (tmp.Points[tmp.SelectedPoint].Value.X + 1).ToString();
+                        YValBox.Text = tmp.Points[tmp.SelectedPoint].Value.Y.ToString();
                         RefreshGraph(false);
                         return;
                     }

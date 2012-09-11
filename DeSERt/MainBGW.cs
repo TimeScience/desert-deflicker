@@ -252,7 +252,7 @@ public partial class DeSERtMain
                         SVtmp = lines[i].Substring(lines[i].IndexOf(":") + 2);
                         if (String.IsNullOrEmpty(SVtmp)) { AllFiles[f].SvString = "N/A"; }
                         else { AllFiles[f].SvString = SVtmp; }
-                        AllFiles[f].Sv = Math.Log(Convert.ToDouble(SVtmp), 3.125f);
+                        AllFiles[f].Sv = Math.Log(Convert.ToInt32(SVtmp), 3.125f);
                     }
                     else if (lines[i].ToLower().StartsWith("wb_rggblevelsasshot"))
                     {
@@ -271,11 +271,15 @@ public partial class DeSERtMain
                         AllFiles[f].Height = Convert.ToInt32(tmp[1]);
                     }
 
-                    if (AllFiles[f].AvString == "N/A" && AllFiles[f].TvString == "N/A" && AllFiles[f].SvString == "N/A") { AllFiles[f].HasExif = false; }
-                    else { AllFiles[f].HasExif = true; }
+                    if (f >= 0 && f < AllFiles.Count)
+                    {
+                        if (AllFiles[f].AvString == "N/A" && AllFiles[f].TvString == "N/A" && AllFiles[f].SvString == "N/A") { AllFiles[f].HasExif = false; }
+                        else { AllFiles[f].HasExif = true; }
 
-                    //Brightness Value
-                    AllFiles[f].Bv = AllFiles[f].Av + AllFiles[f].Tv - AllFiles[f].Sv;
+                        //Brightness Value
+                        AllFiles[f].Bv = AllFiles[f].Av + AllFiles[f].Tv - AllFiles[f].Sv;
+                    }
+
                 }
                 else { e.Result = InfoType.ProcessCancelled; return; }
             }
