@@ -1404,6 +1404,14 @@ public partial class DeSERtMain
             if (MovePoint.Key != tmp.Points.Count - 1 && Xval == AllFiles.Count - 1) { UpdateInfo(InfoType.HighLowValue, 0); return; }
             else { UpdateInfo(InfoType.Default, 0); }
 
+            //if the new X value is higher than the next point
+            if (MovePoint.Key < tmp.Points.Count - 1) { if (Xval >= tmp.Points[tmp.SelectedPoint + 1].Value.X) { UpdateInfo(InfoType.HighLowValue, 0); return; } }
+            else { UpdateInfo(InfoType.Default, 0); }
+
+            //if the new X value is lower than the previous point
+            if (MovePoint.Key > 0) { if (Xval <= tmp.Points[tmp.SelectedPoint - 1].Value.X) { UpdateInfo(InfoType.HighLowValue, 0); return; } }
+            else { UpdateInfo(InfoType.Default, 0); }
+
             //otherwise set the point to its new value (if first or last point, only set Y value)
             if (MovePoint.Key > 0 && MovePoint.Key < tmp.Points.Count - 1) { tmp.Points[tmp.SelectedPoint] = new KeyValuePair<bool,PointF>(tmp.Points[tmp.SelectedPoint].Key, new PointF(Xval, Yval)); }
             else { tmp.Points[tmp.SelectedPoint] = new KeyValuePair<bool,PointF>(tmp.Points[tmp.SelectedPoint].Key, new PointF(tmp.Points[tmp.SelectedPoint].Value.X, Yval)); }
