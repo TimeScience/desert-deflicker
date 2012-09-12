@@ -133,7 +133,7 @@ namespace DeSERt
             public string Method { get; set; }
             public double Radius { get; set; }
             public int Amount { get; set; }
-            public int Threshold { get; set; }
+            public int[] Threshold { get; set; }
             public bool OnlyEdges { get; set; }
             public double EdgedetectionRadius { get; set; }
             public int EdgeTolerance { get; set; }
@@ -150,7 +150,7 @@ namespace DeSERt
             public bool Enabled { get; set; }
             public int Pastels { get; set; }
             public int Saturated { get; set; }
-            public int PSThreshold { get; set; }
+            public int[] PSThreshold { get; set; }
             public bool ProtectSkins { get; set; }
             public bool AvoidColorShift { get; set; }
             public bool PastSatTog { get; set; }
@@ -671,6 +671,7 @@ namespace DeSERt
                         while (!lines[i + 1].StartsWith("["))
                         {
                             i++;
+                            string[] tmp;
                             switch (lines[i].Substring(0, lines[i].IndexOf("=")).ToLower())
                             {
                                 case "enabled":
@@ -686,7 +687,12 @@ namespace DeSERt
                                     Sharpening.Amount = Convert.ToInt32(Convert.ToDouble(lines[i].Substring(lines[i].IndexOf("=") + 1), culture));
                                     break;
                                 case "threshold":
-                                    Sharpening.Threshold = Convert.ToInt32(Convert.ToDouble(lines[i].Substring(lines[i].IndexOf("=") + 1), culture));
+                                    if (lines[i].Contains(";"))
+                                    {
+                                        tmp = lines[i].Substring(lines[i].IndexOf("=") + 1).Split(';');
+                                        Sharpening.Threshold = new int[] { Convert.ToInt32(Convert.ToDouble(tmp[0], culture)), Convert.ToInt32(Convert.ToDouble(tmp[1], culture)), Convert.ToInt32(Convert.ToDouble(tmp[2], culture)), Convert.ToInt32(Convert.ToDouble(tmp[3], culture)) };
+                                    }
+                                    else { Sharpening.Threshold = new int[] { Convert.ToInt32(Convert.ToDouble(lines[i].Substring(lines[i].IndexOf("=") + 1), culture)) }; }
                                     break;
                                 case "onlyedges":
                                     Sharpening.OnlyEdges = Convert.ToBoolean(lines[i].Substring(lines[i].IndexOf("=") + 1));
@@ -723,6 +729,7 @@ namespace DeSERt
                         while (!lines[i + 1].StartsWith("["))
                         {
                             i++;
+                            string[] tmp;
                             switch (lines[i].Substring(0, lines[i].IndexOf("=")).ToLower())
                             {
                                 case "enabled":
@@ -735,7 +742,12 @@ namespace DeSERt
                                     Vibrance.Saturated = Convert.ToInt32(Convert.ToDouble(lines[i].Substring(lines[i].IndexOf("=") + 1), culture));
                                     break;
                                 case "psthreshold":
-                                    Vibrance.PSThreshold = Convert.ToInt32(Convert.ToDouble(lines[i].Substring(lines[i].IndexOf("=") + 1), culture));
+                                    if (lines[i].Contains(";"))
+                                    {
+                                        tmp = lines[i].Substring(lines[i].IndexOf("=") + 1).Split(';');
+                                        Vibrance.PSThreshold = new int[] { Convert.ToInt32(Convert.ToDouble(tmp[0], culture)), Convert.ToInt32(Convert.ToDouble(tmp[1], culture)) };
+                                    }
+                                    else { Vibrance.PSThreshold = new int[] { Convert.ToInt32(Convert.ToDouble(lines[i].Substring(lines[i].IndexOf("=") + 1), culture)) }; }
                                     break;
                                 case "protectskins":
                                     Vibrance.ProtectSkins = Convert.ToBoolean(lines[i].Substring(lines[i].IndexOf("=") + 1));
@@ -1386,7 +1398,8 @@ namespace DeSERt
             writer.WriteLine("Method=" + Sharpening.Method);
             writer.WriteLine("Radius=" + Sharpening.Radius.ToString("N16", culture));
             writer.WriteLine("Amount=" + Sharpening.Amount);
-            writer.WriteLine("Threshold=" + Sharpening.Threshold);
+            if (Sharpening.Threshold.Length == 1) { writer.WriteLine("Threshold=" + Sharpening.Threshold[0]); }
+            else { writer.WriteLine("Threshold=" + Sharpening.Threshold[0] + ";" + Sharpening.Threshold[1] + ";" + Sharpening.Threshold[2] + ";" + Sharpening.Threshold[3] + ";"); }
             writer.WriteLine("OnlyEdges=" + Sharpening.OnlyEdges.ToString().ToLower());
             writer.WriteLine("EdgedetectionRadius=" + Sharpening.EdgedetectionRadius.ToString("N16", culture));
             writer.WriteLine("EdgeTolerance=" + Sharpening.EdgeTolerance);
@@ -1401,7 +1414,8 @@ namespace DeSERt
             writer.WriteLine("Enabled=" + Vibrance.Enabled.ToString().ToLower());
             writer.WriteLine("Pastels=" + Vibrance.Pastels);
             writer.WriteLine("Saturated=" + Vibrance.Saturated);
-            writer.WriteLine("PSThreshold=" + Vibrance.PSThreshold);
+            if (Vibrance.PSThreshold.Length == 1) { writer.WriteLine("Threshold=" + Vibrance.PSThreshold[0]); }
+            else { writer.WriteLine("Threshold=" + Vibrance.PSThreshold[0] + ";" + Vibrance.PSThreshold[1] + ";"); }
             writer.WriteLine("ProtectSkins=" + Vibrance.ProtectSkins.ToString().ToLower());
             writer.WriteLine("AvoidColorShift=" + Vibrance.AvoidColorShift.ToString().ToLower());
             writer.WriteLine("PastSatTog=" + Vibrance.PastSatTog.ToString().ToLower());
@@ -1614,7 +1628,7 @@ namespace DeSERt
             Sharpening.Method = "usm";
             Sharpening.Radius = 0.5f;
             Sharpening.Amount = 125;
-            Sharpening.Threshold = 512;
+            Sharpening.Threshold = new int[] { 20, 80, 2000, 1200 };
             Sharpening.OnlyEdges = false;
             Sharpening.EdgedetectionRadius = 1.9f;
             Sharpening.EdgeTolerance = 1800;
@@ -1628,7 +1642,7 @@ namespace DeSERt
             Vibrance.Enabled = false;
             Vibrance.Pastels = 50;
             Vibrance.Saturated = 50;
-            Vibrance.PSThreshold = 75;
+            Vibrance.PSThreshold = new int[] { 0, 75 };
             Vibrance.ProtectSkins = false;
             Vibrance.AvoidColorShift = true;
             Vibrance.PastSatTog = true;
@@ -1846,7 +1860,6 @@ namespace DeSERt
             Allvals.Add(LuminanceCurve.SaturationLimit);
             Allvals.Add(Sharpening.Radius);
             Allvals.Add(Sharpening.Amount);
-            Allvals.Add(Sharpening.Threshold);
             Allvals.Add(Sharpening.EdgedetectionRadius);
             Allvals.Add(Sharpening.EdgeTolerance);
             Allvals.Add(Sharpening.HalocontrolAmount);
@@ -1856,7 +1869,6 @@ namespace DeSERt
             Allvals.Add(Sharpening.DeconvIterations);
             Allvals.Add(Vibrance.Pastels);
             Allvals.Add(Vibrance.Saturated);
-            Allvals.Add(Vibrance.PSThreshold);
             Allvals.Add(SharpenEdge.Passes);
             Allvals.Add(SharpenEdge.Strength);
             Allvals.Add(SharpenMicro.Strength);
@@ -1935,75 +1947,73 @@ namespace DeSERt
             LuminanceCurve.SaturationLimit = Convert.ToInt32(NewVals[11]);
             Sharpening.Radius = Convert.ToDouble(NewVals[12]);
             Sharpening.Amount = Convert.ToInt32(NewVals[13]);
-            Sharpening.Threshold = Convert.ToInt32(NewVals[14]);
-            Sharpening.EdgedetectionRadius = Convert.ToDouble(NewVals[15]);
-            Sharpening.EdgeTolerance = Convert.ToInt32(NewVals[16]);
-            Sharpening.HalocontrolAmount = Convert.ToInt32(NewVals[17]);
-            Sharpening.DeconvRadius = Convert.ToDouble(NewVals[18]);
-            Sharpening.DeconvAmount = Convert.ToInt32(NewVals[19]);
-            Sharpening.DeconvDamping = Convert.ToInt32(NewVals[20]);
-            Sharpening.DeconvIterations = Convert.ToInt32(NewVals[21]);
-            Vibrance.Pastels = Convert.ToInt32(NewVals[22]);
-            Vibrance.Saturated = Convert.ToInt32(NewVals[23]);
-            Vibrance.PSThreshold = Convert.ToInt32(NewVals[24]);
-            SharpenEdge.Passes = Convert.ToInt32(NewVals[25]);
-            SharpenEdge.Strength = Convert.ToDouble(NewVals[26]);
-            SharpenMicro.Strength = Convert.ToDouble(NewVals[27]);
-            SharpenMicro.Uniformity = Convert.ToDouble(NewVals[28]);
-            WhiteBalance.Temperature = Convert.ToInt32(NewVals[29]);
-            WhiteBalance.Green = Convert.ToDouble(NewVals[30]);
-            ImpulseDenoising.Threshold = Convert.ToInt32(NewVals[31]);
-            Defringing.Radius = Convert.ToDouble(NewVals[32]);
-            Defringing.Threshold = Convert.ToInt32(NewVals[33]);
-            DirectionalPyramidDenoising.Luma = Convert.ToInt32(NewVals[34]);
-            DirectionalPyramidDenoising.Chroma = Convert.ToInt32(NewVals[35]);
-            DirectionalPyramidDenoising.Gamma = Convert.ToDouble(NewVals[36]);
-            EPD.Strength = Convert.ToDouble(NewVals[37]);
-            EPD.EdgeStopping = Convert.ToDouble(NewVals[38]);
-            EPD.Scale = Convert.ToDouble(NewVals[39]);
-            EPD.ReweightingIterates = Convert.ToInt32(NewVals[40]);
-            ShadowsAndHighlights.Highlights = Convert.ToInt32(NewVals[41]);
-            ShadowsAndHighlights.HighlightTonalWidth = Convert.ToInt32(NewVals[42]);
-            ShadowsAndHighlights.Shadows = Convert.ToInt32(NewVals[43]);
-            ShadowsAndHighlights.ShadowTonalWidth = Convert.ToInt32(NewVals[44]);
-            ShadowsAndHighlights.LocalContrast = Convert.ToInt32(NewVals[45]);
-            ShadowsAndHighlights.Radius = Convert.ToInt32(NewVals[46]);
-            Crop.X = Convert.ToInt32(NewVals[47]);
-            Crop.Y = Convert.ToInt32(NewVals[48]);
-            Rotation.Degree = Convert.ToDouble(NewVals[49]);
-            Distortion.Amount = Convert.ToDouble(NewVals[50]);
-            Perspective.Horizontal = Convert.ToInt32(NewVals[51]);
-            Perspective.Vertical = Convert.ToInt32(NewVals[52]);
-            CACorrection.Red = Convert.ToDouble(NewVals[53]);
-            CACorrection.Blue = Convert.ToDouble(NewVals[54]);
-            VignettingCorrection.Amount = Convert.ToInt32(NewVals[55]);
-            VignettingCorrection.Radius = Convert.ToInt32(NewVals[56]);
-            VignettingCorrection.Strength = Convert.ToInt32(NewVals[57]);
-            VignettingCorrection.CenterX = Convert.ToInt32(NewVals[58]);
-            VignettingCorrection.CenterY = Convert.ToInt32(NewVals[59]);
-            Resize.Scale = Convert.ToDouble(NewVals[60]);
-            Resize.Width = Convert.ToInt32(NewVals[61]);
-            Resize.Height = Convert.ToInt32(NewVals[62]);
-            ColorManagement.GammaValue = Convert.ToDouble(NewVals[63]);
-            ColorManagement.GammaSlope = Convert.ToDouble(NewVals[64]);
-            DirectionalPyramidEqualizer.Mult0 = Convert.ToDouble(NewVals[65]);
-            DirectionalPyramidEqualizer.Mult1 = Convert.ToDouble(NewVals[66]);
-            DirectionalPyramidEqualizer.Mult2 = Convert.ToDouble(NewVals[67]);
-            DirectionalPyramidEqualizer.Mult3 = Convert.ToDouble(NewVals[68]);
-            DirectionalPyramidEqualizer.Mult4 = Convert.ToDouble(NewVals[69]);
-            RAW.FlatFieldBlurRadius = Convert.ToInt32(NewVals[70]);
-            RAW.CARed = Convert.ToDouble(NewVals[71]);
-            RAW.CABlue = Convert.ToDouble(NewVals[72]);
-            RAW.LineDenoise = Convert.ToInt32(NewVals[73]);
-            RAW.GreenEqThreshold = Convert.ToInt32(NewVals[74]);
-            RAW.CcSteps = Convert.ToInt32(NewVals[75]);
-            RAW.DCBIterations = Convert.ToInt32(NewVals[76]);
-            RAW.PreExposure = Convert.ToDouble(NewVals[77]);
-            RAW.PrePreserv = Convert.ToDouble(NewVals[78]);
-            RAW.PreBlackzero = Convert.ToDouble(NewVals[79]);
-            RAW.PreBlackone = Convert.ToDouble(NewVals[80]);
-            RAW.PreBlacktwo = Convert.ToDouble(NewVals[81]);
-            RAW.PreBlackthree = Convert.ToDouble(NewVals[82]);
+            Sharpening.EdgedetectionRadius = Convert.ToDouble(NewVals[14]);
+            Sharpening.EdgeTolerance = Convert.ToInt32(NewVals[15]);
+            Sharpening.HalocontrolAmount = Convert.ToInt32(NewVals[16]);
+            Sharpening.DeconvRadius = Convert.ToDouble(NewVals[17]);
+            Sharpening.DeconvAmount = Convert.ToInt32(NewVals[18]);
+            Sharpening.DeconvDamping = Convert.ToInt32(NewVals[19]);
+            Sharpening.DeconvIterations = Convert.ToInt32(NewVals[20]);
+            Vibrance.Pastels = Convert.ToInt32(NewVals[21]);
+            Vibrance.Saturated = Convert.ToInt32(NewVals[22]);
+            SharpenEdge.Passes = Convert.ToInt32(NewVals[23]);
+            SharpenEdge.Strength = Convert.ToDouble(NewVals[24]);
+            SharpenMicro.Strength = Convert.ToDouble(NewVals[25]);
+            SharpenMicro.Uniformity = Convert.ToDouble(NewVals[26]);
+            WhiteBalance.Temperature = Convert.ToInt32(NewVals[27]);
+            WhiteBalance.Green = Convert.ToDouble(NewVals[28]);
+            ImpulseDenoising.Threshold = Convert.ToInt32(NewVals[29]);
+            Defringing.Radius = Convert.ToDouble(NewVals[30]);
+            Defringing.Threshold = Convert.ToInt32(NewVals[31]);
+            DirectionalPyramidDenoising.Luma = Convert.ToInt32(NewVals[32]);
+            DirectionalPyramidDenoising.Chroma = Convert.ToInt32(NewVals[33]);
+            DirectionalPyramidDenoising.Gamma = Convert.ToDouble(NewVals[34]);
+            EPD.Strength = Convert.ToDouble(NewVals[35]);
+            EPD.EdgeStopping = Convert.ToDouble(NewVals[36]);
+            EPD.Scale = Convert.ToDouble(NewVals[37]);
+            EPD.ReweightingIterates = Convert.ToInt32(NewVals[38]);
+            ShadowsAndHighlights.Highlights = Convert.ToInt32(NewVals[39]);
+            ShadowsAndHighlights.HighlightTonalWidth = Convert.ToInt32(NewVals[40]);
+            ShadowsAndHighlights.Shadows = Convert.ToInt32(NewVals[41]);
+            ShadowsAndHighlights.ShadowTonalWidth = Convert.ToInt32(NewVals[42]);
+            ShadowsAndHighlights.LocalContrast = Convert.ToInt32(NewVals[43]);
+            ShadowsAndHighlights.Radius = Convert.ToInt32(NewVals[44]);
+            Crop.X = Convert.ToInt32(NewVals[45]);
+            Crop.Y = Convert.ToInt32(NewVals[46]);
+            Rotation.Degree = Convert.ToDouble(NewVals[47]);
+            Distortion.Amount = Convert.ToDouble(NewVals[48]);
+            Perspective.Horizontal = Convert.ToInt32(NewVals[49]);
+            Perspective.Vertical = Convert.ToInt32(NewVals[50]);
+            CACorrection.Red = Convert.ToDouble(NewVals[51]);
+            CACorrection.Blue = Convert.ToDouble(NewVals[52]);
+            VignettingCorrection.Amount = Convert.ToInt32(NewVals[53]);
+            VignettingCorrection.Radius = Convert.ToInt32(NewVals[54]);
+            VignettingCorrection.Strength = Convert.ToInt32(NewVals[55]);
+            VignettingCorrection.CenterX = Convert.ToInt32(NewVals[56]);
+            VignettingCorrection.CenterY = Convert.ToInt32(NewVals[57]);
+            Resize.Scale = Convert.ToDouble(NewVals[58]);
+            Resize.Width = Convert.ToInt32(NewVals[59]);
+            Resize.Height = Convert.ToInt32(NewVals[60]);
+            ColorManagement.GammaValue = Convert.ToDouble(NewVals[61]);
+            ColorManagement.GammaSlope = Convert.ToDouble(NewVals[62]);
+            DirectionalPyramidEqualizer.Mult0 = Convert.ToDouble(NewVals[63]);
+            DirectionalPyramidEqualizer.Mult1 = Convert.ToDouble(NewVals[64]);
+            DirectionalPyramidEqualizer.Mult2 = Convert.ToDouble(NewVals[65]);
+            DirectionalPyramidEqualizer.Mult3 = Convert.ToDouble(NewVals[66]);
+            DirectionalPyramidEqualizer.Mult4 = Convert.ToDouble(NewVals[67]);
+            RAW.FlatFieldBlurRadius = Convert.ToInt32(NewVals[68]);
+            RAW.CARed = Convert.ToDouble(NewVals[69]);
+            RAW.CABlue = Convert.ToDouble(NewVals[70]);
+            RAW.LineDenoise = Convert.ToInt32(NewVals[71]);
+            RAW.GreenEqThreshold = Convert.ToInt32(NewVals[72]);
+            RAW.CcSteps = Convert.ToInt32(NewVals[73]);
+            RAW.DCBIterations = Convert.ToInt32(NewVals[74]);
+            RAW.PreExposure = Convert.ToDouble(NewVals[75]);
+            RAW.PrePreserv = Convert.ToDouble(NewVals[76]);
+            RAW.PreBlackzero = Convert.ToDouble(NewVals[77]);
+            RAW.PreBlackone = Convert.ToDouble(NewVals[78]);
+            RAW.PreBlacktwo = Convert.ToDouble(NewVals[79]);
+            RAW.PreBlackthree = Convert.ToDouble(NewVals[80]);
         }
 
         #endregion

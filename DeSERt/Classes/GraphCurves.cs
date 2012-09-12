@@ -34,7 +34,6 @@ namespace DeSERt
             LuminanceCurve_SaturationLimit,
             Sharpening_Radius,
             Sharpening_Amount,
-            Sharpening_Threshold,
             Sharpening_EdgedetectionRadius,
             Sharpening_EdgeTolerance,
             Sharpening_HalocontrolAmount,
@@ -44,7 +43,6 @@ namespace DeSERt
             Sharpening_DeconvIterations,
             Vibrance_Pastels,
             Vibrance_Saturated,
-            Vibrance_PSThreshold,
             SharpenEdge_Passes,
             SharpenEdge_Strength,
             SharpenMicro_Strength,
@@ -168,7 +166,6 @@ namespace DeSERt
             crvs.Add(CurveName.LuminanceCurve_SaturationLimit.ToString(), new GCurve(CurveName.LuminanceCurve_SaturationLimit, 0, 100, PP3.LuminanceCurve.SaturationLimit, filecount));
             crvs.Add(CurveName.Sharpening_Radius.ToString(), new GCurve(CurveName.Sharpening_Radius, 0.29999999999999999, 3, (float)PP3.Sharpening.Radius, filecount));
             crvs.Add(CurveName.Sharpening_Amount.ToString(), new GCurve(CurveName.Sharpening_Amount, 1, 1000, PP3.Sharpening.Amount, filecount));
-            crvs.Add(CurveName.Sharpening_Threshold.ToString(), new GCurve(CurveName.Sharpening_Threshold, 0, 16384, PP3.Sharpening.Threshold, filecount));
             crvs.Add(CurveName.Sharpening_EdgedetectionRadius.ToString(), new GCurve(CurveName.Sharpening_EdgedetectionRadius, 1.8999999999999999, 1.8999999999999999, (float)PP3.Sharpening.EdgedetectionRadius, filecount));
             crvs.Add(CurveName.Sharpening_EdgeTolerance.ToString(), new GCurve(CurveName.Sharpening_EdgeTolerance, 1800, 1800, PP3.Sharpening.EdgeTolerance, filecount));
             crvs.Add(CurveName.Sharpening_HalocontrolAmount.ToString(), new GCurve(CurveName.Sharpening_HalocontrolAmount, 85, 85, PP3.Sharpening.HalocontrolAmount, filecount));
@@ -178,7 +175,6 @@ namespace DeSERt
             crvs.Add(CurveName.Sharpening_DeconvIterations.ToString(), new GCurve(CurveName.Sharpening_DeconvIterations, 5, 30, PP3.Sharpening.DeconvIterations, filecount));
             crvs.Add(CurveName.Vibrance_Pastels.ToString(), new GCurve(CurveName.Vibrance_Pastels, -100, 100, PP3.Vibrance.Pastels, filecount));
             crvs.Add(CurveName.Vibrance_Saturated.ToString(), new GCurve(CurveName.Vibrance_Saturated, -100, 100, PP3.Vibrance.Saturated, filecount));
-            crvs.Add(CurveName.Vibrance_PSThreshold.ToString(), new GCurve(CurveName.Vibrance_PSThreshold, 0, 100, PP3.Vibrance.PSThreshold, filecount));
             crvs.Add(CurveName.SharpenEdge_Passes.ToString(), new GCurve(CurveName.SharpenEdge_Passes, 1, 4, PP3.SharpenEdge.Passes, filecount));
             crvs.Add(CurveName.SharpenEdge_Strength.ToString(), new GCurve(CurveName.SharpenEdge_Strength, 0, 100, (float)PP3.SharpenEdge.Strength, filecount));
             crvs.Add(CurveName.SharpenMicro_Strength.ToString(), new GCurve(CurveName.SharpenMicro_Strength, 0, 100, (float)PP3.SharpenMicro.Strength, filecount));
