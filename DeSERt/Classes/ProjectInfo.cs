@@ -9,7 +9,7 @@ namespace DeSERt
     {
         public static int MainVersion { get { return 1; } }
         public static string Status  { get { return "alpha"; } }
-        public static int MinorVersion { get { return 4; } }
+        public static int MinorVersion { get { return 5; } }
         public static int SubMinorVersion { get { return 1; } }
         public static string Name { get { return "DeSERt"; } }
         public static string OSversion { get { return Environment.OSVersion.VersionString; } }
