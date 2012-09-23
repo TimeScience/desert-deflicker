@@ -211,7 +211,8 @@ public partial class DeSERtMain
             {
                 if (ExifWorker.CancellationPending == false)
                 {
-                    if (lines[i].ToLower().StartsWith("==="))
+                    string startline = "======== " + AllFiles[f + 1].FilePath.ToLower().Replace(@"\", "/");
+                    if (startline == lines[i].ToLower())
                     {
                         if (lines[i].Contains(AllFiles[f + 1].Filename)) { f++; }
                     }
