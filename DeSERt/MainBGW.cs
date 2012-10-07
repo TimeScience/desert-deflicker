@@ -211,11 +211,10 @@ public partial class DeSERtMain
             {
                 if (ExifWorker.CancellationPending == false)
                 {
-                    string startline = "======== " + AllFiles[f + 1].FilePath.ToLower().Replace(@"\", "/");
-                    if (startline == lines[i].ToLower())
-                    {
-                        if (lines[i].Contains(AllFiles[f + 1].Filename)) { f++; }
-                    }
+                    string startline = String.Empty;
+                    if (f < AllFiles.Count - 1) { startline = "======== " + AllFiles[f + 1].FilePath.ToLower().Replace(@"\", "/"); }
+
+                    if (startline == lines[i].ToLower()) { f++; }
                     else if (lines[i].ToLower().StartsWith("aperturevalue"))
                     {
                         AVtmp = lines[i].Substring(lines[i].IndexOf(":") + 2);

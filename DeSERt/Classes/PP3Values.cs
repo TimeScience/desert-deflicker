@@ -1591,8 +1591,8 @@ namespace DeSERt
         {
             NewCompensation = 0;
 
-            Version.AppVersion = "4.0.9";
-            Version.Version = 301;
+            Version.AppVersion = "4.0.9.50";
+            Version.Version = 302;
 
             General.Rank = 0;
             General.ColorLabel = 0;

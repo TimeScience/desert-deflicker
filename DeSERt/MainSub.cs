@@ -1988,7 +1988,7 @@ public partial class DeSERtMain
             if (AllFiles[PrevIndex].Width > AllFiles[PrevIndex].Height)
             {
                 width = 600;
-                height = (int)(width * fac);
+                height = (int)(width / fac);
             }
             else
             {
