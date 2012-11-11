@@ -715,6 +715,44 @@ public partial class DeSERtMain
         }
     }
 
+    //command probably not correct
+    private void XMPWorker_DoWork(object sender, DoWorkEventArgs e)
+    {
+        try
+        {
+            string ExiftoolName = "";
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT) { ExiftoolName = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "exiftool.exe"); }
+            else if (Environment.OSVersion.Platform == PlatformID.Unix) { ExiftoolName = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "exiftool"); }
+            else if (Environment.OSVersion.Platform == PlatformID.MacOSX) { ExiftoolName = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "exiftool"); }       //Not sure if that works
+            else { e.Result = InfoType.InvalidOS; return; }
+            ProcessStartInfo exiftoolStartInfo = new ProcessStartInfo(ExiftoolName, e.Argument.ToString());
+            exiftoolStartInfo.UseShellExecute = false;
+            exiftoolStartInfo.CreateNoWindow = true;
+
+            exiftool.StartInfo = exiftoolStartInfo;
+
+            exiftoolStartInfo.Arguments = "-s -xmp " + Workpath;
+            exiftoolStartInfo.RedirectStandardOutput = true;
+
+            exiftool.StartInfo = exiftoolStartInfo;
+            exiftool.Start();
+
+            string XMPstuff = exiftool.StandardOutput.ReadToEnd();
+
+            ProcessXMPString(XMPstuff);
+
+            exiftool.StandardOutput.Close();
+            exiftool.WaitForExit();
+
+            e.Result = InfoType.OK;
+        }
+        catch (Exception ex)
+        {
+            e.Result = InfoType.Error;
+            ThreadException = ex;
+        }
+    }
+
     #endregion DoWork
 
 
@@ -993,7 +1031,23 @@ public partial class DeSERtMain
             catch (Exception ex) { ReportError("Open Finished", ex); }
         });
     }
-    
+
+    private void XMPWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+        try
+        {
+            if ((InfoType)e.Result == InfoType.OK)
+            {
+                UpdateInfo(InfoType.XMP, 0);
+            }
+            else if ((InfoType)e.Result == InfoType.Error)
+            {
+                ReportError("XMP Backgroundworker", ThreadException);
+            }
+        }
+        catch (Exception ex) { ReportError("XMP Worker Finished", ex); }
+    }
+
     #endregion Completed
 
 
