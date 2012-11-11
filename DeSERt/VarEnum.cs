@@ -23,6 +23,7 @@ public partial class DeSERtMain
     private BackgroundWorker SaveBackground;
     private BackgroundWorker OpenBackground;
     private BackgroundWorker ExifWorker;
+    private BackgroundWorker XMPWorker;
     private List<BackgroundWorker> CalcWorker = new List<BackgroundWorker>();
 
     private Process RT = new Process();
@@ -106,6 +107,7 @@ public partial class DeSERtMain
         InconsistentCurve,
         PreviewCalc,
         FileRemoveError,
+        XMP,
 
         None = 99,
     }

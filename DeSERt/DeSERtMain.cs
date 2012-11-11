@@ -23,7 +23,6 @@ public partial class DeSERtMain : Gtk.Window
             Build();
             MySettings.Load();
             InitForm();
-            
         }
         catch (Exception ex) { ReportError("Init Form", ex); }
     }
@@ -815,12 +814,12 @@ public partial class DeSERtMain : Gtk.Window
     }
 
 
-    void ResetBrSingle_ButtonPressEvent(object o, ButtonPressEventArgs args)
+    protected void ResetBrSingle_ButtonPressEvent(object o, ButtonPressEventArgs args)
     {
         ResetTableBrightness(TableChangeType.Single);
     }
 
-    void ResetBrComplete_ButtonPressEvent(object o, ButtonPressEventArgs args)
+    protected void ResetBrComplete_ButtonPressEvent(object o, ButtonPressEventArgs args)
     {
         ResetTableBrightness(TableChangeType.All);
     }

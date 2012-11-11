@@ -159,6 +159,7 @@ public partial class DeSERtMain
         BackCounter = new MyTimer(new GLib.TimeoutHandler(BackCounter_Tick));
         CalcWorker = new List<BackgroundWorker>();
         ExifWorker = new BackgroundWorker();
+        XMPWorker = new BackgroundWorker();
 
         BackCounter.Time = 1000;
 
@@ -185,7 +186,10 @@ public partial class DeSERtMain
         OpenBackground.ProgressChanged += new ProgressChangedEventHandler(General_ProgressChanged);
         OpenBackground.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OpenBackground_RunWorkerCompleted);
         OpenBackground.WorkerReportsProgress = true;
-        OpenBackground.WorkerSupportsCancellation = true;        
+        OpenBackground.WorkerSupportsCancellation = true;
+
+        XMPWorker.DoWork += new DoWorkEventHandler(XMPWorker_DoWork);
+        XMPWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(XMPWorker_RunWorkerCompleted);
     }
 
     private bool Quit(ClosingReason reason)
@@ -1849,6 +1853,12 @@ public partial class DeSERtMain
            AllFiles[i].PP3.Exposure.Auto = false;
            AllFiles[i].PP3.WriteFile(path);
        }
+    }
+
+    //not written yet
+    private void ProcessXMPString(string XMPstring)
+    {
+
     }
 
     //not written yet
