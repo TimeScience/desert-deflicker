@@ -1357,7 +1357,7 @@ namespace DeSERt
             writer.WriteLine();
             writer.WriteLine("[Version]");
             writer.WriteLine("AppVersion=" + Version.AppVersion);
-            writer.WriteLine("Version=" + Version.Version);
+            writer.WriteLine("Version=" + 302); //Version.Version);
             writer.WriteLine();
             writer.WriteLine("[General]");
             writer.WriteLine("Rank=" + General.Rank);
