@@ -2023,7 +2023,7 @@ public partial class DeSERtMain
                     neutral.RAW = AllFiles[PrevIndex + i].PP3.RAW;
                     neutral.Exposure = AllFiles[PrevIndex + i].PP3.Exposure;
                     neutral.Exposure.Auto = false;
-                    neutral.NewCompensation = AllFiles[PrevIndex + i].PP3.Exposure.Compensation + AllFiles[PrevIndex].PP3.NewCompensation;
+                    neutral.NewCompensation = AllFiles[PrevIndex + i].PP3.Exposure.Compensation + AllFiles[PrevIndex + i].PP3.NewCompensation;
                     neutral.WriteFile(AllFiles[PrevIndex + i].FilePath + ".pp3");
                     command += " \"" + AllFiles[PrevIndex + i].FilePath + "\"";
                 }
