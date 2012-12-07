@@ -558,7 +558,7 @@ public partial class DeSERtMain : Gtk.Window
 
                 for (int i = 1; i < AllFiles.Count; i++)
                 {
-                    AllFiles[i].AltBrightness = AllFiles[i - 1].AltBrightness + change[i];
+                    if (change[i] >= 0) { AllFiles[i].AltBrightness = AllFiles[i - 1].AltBrightness + change[i]; }
                 }
                 
                 double min = AllFiles.Min(p => p.AltBrightness);
