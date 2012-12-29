@@ -225,9 +225,13 @@ public partial class DeSERtMain
                         }
                         else
                         {
-                            AllFiles[f].AvString = AVtmp;
-                            AllFiles[f].Av = Convert.ToDouble(AVtmp.Replace(".", ","));
-                            AllFiles[f].Av = Math.Log(Math.Pow(AllFiles[f].Av, 2), 2);
+                            try
+                            {
+                                AllFiles[f].AvString = AVtmp;
+                                AllFiles[f].Av = Convert.ToDouble(AVtmp.Replace(".", ","));
+                                AllFiles[f].Av = Math.Log(Math.Pow(AllFiles[f].Av, 2), 2);
+                            }
+                            catch { AllFiles[f].AvString = "N/A"; }
                         }
                     }
                     else if (lines[i].ToLower().StartsWith("shutterspeedvalue"))
@@ -237,13 +241,18 @@ public partial class DeSERtMain
                         else { AllFiles[f].TvString = TVtmp; }
                         if (TVtmp.Contains(@"/"))
                         {
-                            TVnume = Convert.ToDouble(TVtmp.Substring(0, TVtmp.IndexOf(@"/")));
-                            TVdenom = Convert.ToDouble(TVtmp.Substring(TVtmp.IndexOf(@"/") + 1));
-                            AllFiles[f].Tv = TVnume / TVdenom;
+                            try
+                            {
+                                TVnume = Convert.ToDouble(TVtmp.Substring(0, TVtmp.IndexOf(@"/")));
+                                TVdenom = Convert.ToDouble(TVtmp.Substring(TVtmp.IndexOf(@"/") + 1));
+                                AllFiles[f].Tv = TVnume / TVdenom;
+                            }
+                            catch { AllFiles[f].TvString = "N/A"; }
                         }
                         else
                         {
-                            AllFiles[f].Tv = Convert.ToDouble(TVtmp.Replace(".", ","));
+                            try { AllFiles[f].Tv = Convert.ToDouble(TVtmp.Replace(".", ",")); }
+                            catch { AllFiles[f].TvString = "N/A"; }
                         }
                         AllFiles[f].Tv = Math.Log(1 / AllFiles[f].Tv, 2);
                     }
